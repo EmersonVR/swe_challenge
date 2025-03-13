@@ -181,15 +181,26 @@ func (r *AccionRepository) GetRecommendedActions() ([]AccionRecomendada, error) 
 
 		// Asignamos un puntaje a la calificación
 		puntajeRating := map[string]float64{
-			"Buy":            5.0,  
-			"Market Perform": 4.0,
-			"Neutral":        3.5,
-			"Equal Weight":   3.0,
+			"Strong Buy":        6.0,
+			"Buy":              5.5,
+			"Outperform":       5.0,
+			"Overweight":       4.5,
+			"Sector Outperform": 4.0,
+			"Market Perform":   3.5,
+			"Neutral":          3.0,
+			"Equal Weight":     2.5,
+			"In-Line":          2.0,
+			"Sector Perform":   2.0,
+			"Hold":             1.5,
+			"Underweight":      1.0,
+			"Sector Weight":    1.0,
+			"Sell":             0.5,
+			"Underperform":     0.5,
 		}
 		ratingScore := puntajeRating[a.RatingTo]
 
 		// Cálculo final de la puntuación
-		a.Puntuacion = (crecimiento * 2) + (ratingScore * 15) * pesoCorretaje
+		a.Puntuacion = (crecimiento * 2) + (ratingScore * 10) * pesoCorretaje
 
 		acciones = append(acciones, a)
 	}
