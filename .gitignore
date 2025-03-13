@@ -1,0 +1,8 @@
+# Ignorar archivos de compilación y dependencias
+swe_challenge/.env
+swe_challenge/bin/
+swe_challenge/obj/
+swe_challenge/vendor/
+swe_challenge/tmp/
+swe_challenge-ui/node_modules/
+swe_challenge-ui/dist/
