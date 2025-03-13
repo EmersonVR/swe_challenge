@@ -36,3 +36,70 @@ Pruebas Unitarias
 Pruebas de integración con base de datos usando sqlmock.
 Pruebas de endpoints con httptest.
 Validación de lógica de recomendación.
+
+### Despliegue del Proyecto con Terraform  
+
+Para desplegar el proyecto en AWS, se utiliza Terraform para crear la infraestructura necesaria, incluyendo una instancia EC2 para el backend y una base de datos en RDS con CockroachDB.  
+
+Pasos para desplegar la infraestructura
+
+1. Inicializar Terraform
+   
+   terraform init
+
+2. Aplicar la configuración y desplegar los recursos
+
+   terraform apply -auto-approve
+
+3. Obtener la dirección IP pública de la instancia EC2
+   
+   terraform output ec2_instance_public_ip
+
+
+4. Acceder a la instancia EC2 vía SSH
+
+   ssh -i ~/.ssh/my-key1.pem ec2-user@<IP_PUBLICA>
+   
+
+Manejo de instancias para optimización de costos
+Las instancias se detienen para evitar costos innecesarios. Para reactivarlas cuando sea necesario
+comandos:
+
+1. Iniciar la instancia EC2
+  
+   aws ec2 start-instances --instance-ids <INSTANCE_ID>
+  
+
+2. Iniciar la base de datos en RDS
+
+   aws rds start-db-instance --db-instance-identifier stockdb
+  
+
+3. Obtener la nueva IP pública de la instancia EC2
+   aws ec2 describe-instances --instance-ids <INSTANCE_ID> --query 'Reservations[*].Instances[*].PublicIpAddress' --output text
+   
+
+4. Conectarse nuevamente a la instancia EC2
+   ssh -i ~/.ssh/my-key1.pem ec2-user@<NEW_PUBLIC_IP>
+
+Verificación del backend en la instancia EC2
+
+Para comprobar que el backend está en ejecución:  
+
+sudo systemctl status backend.service
+
+Si el servicio no está corriendo, reiniciarlo manualmente:  
+sudo systemctl restart backend.service
+
+Pruebas de API
+
+Una vez que el backend esté activo, se pueden realizar pruebas con los siguientes comandos:  
+
+1. Obtener recomendaciones de inversión
+   curl -X GET http://<NEW_PUBLIC_IP>:9090/recomendaciones
+
+2. Listar todas las acciones almacenadas: 
+
+   curl -X GET http://<NEW_PUBLIC_IP>:9090/acciones
+
+Estos pasos aseguran que la infraestructura esté correctamente desplegada y funcional cuando se requiera demostrar el sistema.
