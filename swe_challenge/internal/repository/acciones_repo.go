@@ -173,7 +173,11 @@ func (r *AccionRepository) GetRecommendedActions() ([]AccionRecomendada, error) 
 		corretajesVIP := map[string]float64{
 			"Goldman Sachs": 1.3,
 			"Morgan Stanley": 1.2,
-			"Citigroup":      1.1,
+			"JPMorgan Chase & Co.": 1.2,
+			"Bank of America": 1.1,
+			"Citigroup": 1.1,
+			"Wells Fargo & Company": 1.1,
+			"UBS Group": 1.1,
 		}
 		if peso, ok := corretajesVIP[a.Corretaje]; ok {
 			pesoCorretaje = peso
