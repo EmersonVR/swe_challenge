@@ -6,3 +6,6 @@ swe_challenge/vendor/
 swe_challenge/tmp/
 swe_challenge-ui/node_modules/
 swe_challenge-ui/dist/
+swe_challenge-terraform/.terraform/
+swe_challenge-terraform/terraform.tfstate
+terraform_output.txt
